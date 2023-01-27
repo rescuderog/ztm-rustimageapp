@@ -26,7 +26,9 @@ async function init() {
         const base64 = fileReader.result.replace(
             /^data:image\/(png|jpg|jpeg);base64,/, ''
         );
-        rustApp.grayscale(base64);
+        let img_data_url = rustApp.grayscale(base64);
+        //we finally display the grayscaled image on the browser
+        document.getElementById('new-img').setAttribute('src', img_data_url);
     }
 }
 
