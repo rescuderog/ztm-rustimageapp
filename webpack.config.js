@@ -1,6 +1,7 @@
 //Webpack config file for the project
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const WASMPackPlugin = require('@wasm-tool/wasm-pack-plugin');
 
 module.exports = {
     //for the entry we specify the main js file, which isn't the rust app. We keep them separated and thus, the html and js files are in the public folder
@@ -15,6 +16,13 @@ module.exports = {
         //we import this plugin to give webpack html support and make it serve our simple HTML page
         new HTMLWebpackPlugin({
             template: './public/index.html'
+        }),
+        //WASM plugin for Webpack, so we can compile rust code into WASM
+        new WASMPackPlugin({
+            crateDirectory: path.resolve(__dirname, '.')
         })
-    ]
+    ],
+    experiments: {
+        asyncWebAssembly: true
+    }
 }
